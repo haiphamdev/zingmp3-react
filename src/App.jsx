@@ -1,13 +1,17 @@
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import { Bounce, ToastContainer } from "react-toastify";
-import { Home, Login, Public } from "./containers/public";
+import { Home, Login, Personal, Public } from "./containers/public";
+import * as actions from "./store/actions";
 import path from "./utils/path";
 
 function App() {
-  const { homeData } = useSelector((state) => state.app);
+  const dispatch = useDispatch();
 
-  console.log(homeData);
+  useEffect(() => {
+    dispatch(actions.getHome());
+  }, []);
 
   return (
     <>
@@ -16,6 +20,7 @@ function App() {
           <Route path={path.PUBLIC} element={<Public />}>
             <Route path={path.HOME} element={<Home />} />
             <Route path={path.LOGIN} element={<Login />} />
+            <Route path={path.MY_MUSIC} element={<Personal />} />
 
             <Route path={path.STAR} element={<Home />} />
           </Route>
